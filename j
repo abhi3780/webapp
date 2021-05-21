@@ -15,6 +15,7 @@ pipeline {
     stage ('Build') {
       steps {
       sh 'mvn clean package -X'
+      sh 'ls /var/jenkins_home/workspace/webapp/target'
        }
     }
    }
