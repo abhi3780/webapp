@@ -20,11 +20,14 @@ pipeline {
       sh 'echo -- BROWSE -- http://10.109.137.30:8000/WebApp/'
        }
     }
-    stage ('DAST') {
+    stage ('DAST Scan') {
       steps {
-         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/ && echo 123 && cp /arachni/*.afr /arachni/bin/ && /arachni/bin/./arachni_reporter *.afr --reporter=html:outfile=report.html" '
+         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/" '
        
         }
     }
+    stage ('Report Generation HTML') {
+    steps {
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash cp /arachni/*.afr /arachni/bin/ && /arachni/bin/./arachni_reporter *.afr --reporter=html:outfile=report.html" '
    }
  }
