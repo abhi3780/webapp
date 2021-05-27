@@ -24,7 +24,7 @@ pipeline {
     
    stage ('Snyk Scan') {
       steps {
-      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/juice-shop', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
+      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
       }
  }
    stage ('Build') {
