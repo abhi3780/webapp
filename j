@@ -22,11 +22,11 @@ pipeline {
       }
     } */
     
-  /*  stage ('Snyk Scan') {
+   stage ('Snyk Scan') {
       steps {
-      snykSecurity failOnIssues: false, snykInstallation: 'Please define a Snyk installation in the Jenkins Global Tool Configuration. This task will not run without a Snyk installation.', snykTokenId: 'Snyk_27May_1015PM'
-   }
- } */
+      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'latest', snykTokenId: 'Snyk_27May_1015PM'
+      }
+ }
    stage ('Build') {
       steps {
       sh 'mvn clean package -X'
