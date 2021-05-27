@@ -13,19 +13,20 @@ pipeline {
       }
     } 
     
-   stage ('Check-Git-Secrets') {
+  /* stage ('Check-Git-Secrets') {
       steps {
         sh 'rm trufflehog || true'
         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run gesellix/trufflehog --json https://github.com/abhi3780/webapp.git > trufflehog"'
-        // sh 'ls /var/jenkins_home/workspace/webapp_pipeline/target'
-       // cat trufflehog'
+        sh 'ls /var/jenkins_home/workspace/webapp_pipeline/target'
+       cat trufflehog'
       }
-    }
-    stage ('Snyk Scan') {
+    } */
+    
+  /*  stage ('Snyk Scan') {
       steps {
       snykSecurity failOnIssues: false, snykInstallation: 'Please define a Snyk installation in the Jenkins Global Tool Configuration. This task will not run without a Snyk installation.', snykTokenId: 'Snyk_27May_1015PM'
    }
- } 
+ } */
    stage ('Build') {
       steps {
       sh 'mvn clean package -X'
