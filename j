@@ -16,7 +16,7 @@ pipeline {
   stage ('Check-Git-Secrets') {
       steps {
        // sh 'rm trufflehog || true'
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp"'
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp/truffelhog"'
        // sh 'ls /var/jenkins_home/workspace/webapp_pipeline/target'
       // cat trufflehog'
       }
