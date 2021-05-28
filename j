@@ -43,10 +43,10 @@ pipeline {
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
- /*   stage ('Check-Git-Secrets') {
+     stage ('Check-Git-Secrets') {
       steps {
         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > truffelhog"'
       }
-    } */
+    } 
    }
  }
