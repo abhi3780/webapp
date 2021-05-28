@@ -49,7 +49,4 @@ pipeline {
       }
     } */
    }
-   stage ('IBM App Scan')
-   steps {
-   
  }
