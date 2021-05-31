@@ -15,12 +15,11 @@ pipeline {
     
    stage ('Check-Git-Secrets') {
       steps {
-     // sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > truffelhog"'
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git --report=my-report.json" '
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git --report=gitleaks.csv" '
       }
     } 
     
-   stage ('Snyk Scan') {
+   stage ('SAST Scan - Snyk ') {
       steps {
       snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
       }
@@ -38,17 +37,11 @@ pipeline {
       sh 'echo -- BROWSE -- http://10.109.137.30:8000/WebApp/'
        }
     }
-    stage ('DAST Scan') {
+    stage ('DAST Scan - Arachni') {
       steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/" '
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
-   /*  stage ('Check-Git-Secrets') {
-      steps {
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > truffelhog"'
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "set +e"'
-     }
-    } */
    }
  }
