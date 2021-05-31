@@ -13,11 +13,11 @@ pipeline {
       }
     } 
     
-   stage ('Check-Git-Secrets') {
+/*   stage ('Check-Git-Secrets') {
       steps {
         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git --report=gitleaks.json" '
       }
-    } 
+    }     */
     
    stage ('SAST Scan - Snyk ') {
       steps {
