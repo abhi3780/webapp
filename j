@@ -46,7 +46,7 @@ pipeline {
      stage ('Check-Git-Secrets') {
       steps {
         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run dxa4481/trufflehog:latest --json https://github.com/abhi3780/webapp.git > truffelhog"'
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "set -e"'
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "set +e"'
      }
     } 
    }
