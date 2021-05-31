@@ -43,13 +43,13 @@ pipeline {
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
-    stage ('IBM App Scan') {
+ /*   stage ('IBM App Scan') {
       steps {
        sh '''
         appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'Abhilash_DevSecOps', name: 'test1', scanner: static_analyzer(hasOptions: false, target: 'http://10.109.137.30:8000/WebApp/#'), type: 'Static Analyzer'
         
         '''
      }
-    } 
+    }   */
    }
  }
