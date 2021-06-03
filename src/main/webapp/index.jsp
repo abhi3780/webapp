@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Abhilash --- Course 123</title>
+    <title>Abhilash --- Course --- 123</title>
 
 
     <!-- Custom styles for this template -->
