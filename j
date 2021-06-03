@@ -21,7 +21,7 @@ pipeline {
     
    stage ('SAST Scan - Snyk ') {
       steps {
-      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
+      snykSecurity failOnIssues: false, organisation: 'Demo', projectName: 'abhi/3780', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'web.config'
       }
  }
    stage ('Build') {
