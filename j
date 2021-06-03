@@ -37,16 +37,19 @@ pipeline {
       sh 'echo -- BROWSE -- http://10.109.137.30:8000/WebApp/'
        }
     }
-    stage ('DAST Scan - Arachni') {
+    stage ('DAST Scan') {
+      parallel {
+        stage ('Arachni') {
       steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/" '
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
-   stage ('IBM App Scan') {
+      stage ('IBM App Scan') {
       steps {
         appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1864', scanner: dynamic_analyzer(hasOptions: false, optimization: 'Fast', scanType: 'Staging', target: 'http://altoromutual.com:8080/login.jsp'), type: 'Dynamic Analyzer'
      }
-    }   
+    }  
+   }
   }
  }
