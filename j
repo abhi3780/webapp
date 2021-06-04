@@ -61,7 +61,7 @@ pipeline {
     }  
    }
   }
-     stage ('Infra Scan') {
+   /*  stage ('Infra Scan') {
       parallel {
         stage ('OpenVAS') {
           steps {
@@ -69,11 +69,11 @@ pipeline {
            }
          }
        stage ('Qualysguard') {
-         /*  steps {
+           steps {
           // sh 'echo Command Script'
          }
-        } */
+        } 
      }
-   }
+   } */
   }
 }
