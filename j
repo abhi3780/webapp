@@ -61,5 +61,19 @@ pipeline {
     }  
    }
   }
- }
+     stage ('Infra Scan') {
+      parallel {
+        stage ('OpenVAS') {
+          steps {
+            sh 'echo https://10.109.137.30/omp?cmd=get_tasks&token=a96dba21-5731-4e03-a0c1-f2f6320187d3'
+           }
+         }
+        stage ('Qualysguard') {
+         steps {
+          // Command Script
+         }
+        }
+     }
+   }
+  }
 }
