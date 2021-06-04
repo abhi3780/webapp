@@ -41,8 +41,8 @@ pipeline {
    
     stage ('Artifact Analysis - Trivy') {
       steps {
-      //sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
-      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run --rm -it aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
+    //sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
     }
    }
    
