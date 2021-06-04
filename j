@@ -70,7 +70,7 @@ pipeline {
          }
         stage ('Qualysguard') {
          steps {
-          // Command Script
+          // sh 'echo Command Script'
          }
         }
      }
