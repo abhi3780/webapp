@@ -38,12 +38,14 @@ pipeline {
       sh 'ls /var/jenkins_home/workspace/webapp/target'
      }
     }
-    
-    stage ('Artifact Analysis') {
+   
+    stage ('Artifact Analysis - Trivy') {
       steps {
-      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+      //sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run --rm -it aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
     }
    }
+   
     stage ('Deploy') {
      steps {
      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp f545e59a5a7536da1fa8a6c3b9c3e2154485ac6adf6855e0379dd6217778e7c3:/usr/local/tomcat/webapps" '
