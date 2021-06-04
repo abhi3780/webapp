@@ -15,7 +15,7 @@ pipeline {
     
 /*   stage ('Check-Git-Secrets') {
       steps {
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run -rm -it zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git --report=gitleaks.json" '
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git --report=gitleaks.json" '
       }
     }     */
     
@@ -41,7 +41,7 @@ pipeline {
     
     stage ('Artifact Analysis') {
       steps {
-      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run --rm -it aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
     }
    }
     stage ('Deploy') {
