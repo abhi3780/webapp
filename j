@@ -19,13 +19,20 @@ pipeline {
       }
     }     */
     
-   stage ('SAST Scan - Snyk ') {
+   stage ('SCA - Snyk ') {
       steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
 
       }
  }
+ 
+   stage ('SAST - IBMApp Scan Source') {
+      steps {
+       appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1475', scanner: static_analyzer(hasOptions: false, target: '/var/jenkins_home/workspace/webgoat_pipeline'), type: 'Static Analyzer'
+      }
+     } 
+     
    stage ('Build') {
       steps {
       sh 'mvn clean package -X'
@@ -47,7 +54,7 @@ pipeline {
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
-      stage ('IBM App Scan') {
+      stage ('IBMApp Scan Dynamic') {
       steps {
         appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1864', scanner: dynamic_analyzer(hasOptions: false, optimization: 'Fast', scanType: 'Staging', target: 'http://altoromutual.com:8080/login.jsp'), type: 'Dynamic Analyzer'
      }
