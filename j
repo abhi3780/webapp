@@ -9,6 +9,7 @@ pipeline {
         sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
+                    hangoutsNotifyBuildStart()
             ''' 
       }
     } 
@@ -82,16 +83,16 @@ pipeline {
      }
    }
    
-       stage ('Health') {
+       stage ('Health CheckUp') {
        parallel {
-        stage ('Jenkins|Monitor') {
+        stage ('Jenkins') {
           steps {
             sh 'echo http://10.109.137.30:8080/monitoring'
            }
          }
-       stage ('Notification') {
+       stage ('Notification - Hangouts') {
            steps {
-            hangoutsNotify message: "This message is from a pipeline!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
+            hangoutsNotify message: "The Build was Success!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
             }
           
         } 
