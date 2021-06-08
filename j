@@ -93,7 +93,6 @@ pipeline {
        stage ('Notification - Hangouts') {
            steps {
             hangoutsNotify message: "The Build was Success!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
-            hangoutsNotifySuccess()
             }
           
         } 
