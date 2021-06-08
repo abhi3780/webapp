@@ -9,7 +9,6 @@ pipeline {
         sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                    
             ''' 
       }
     } 
@@ -20,18 +19,36 @@ pipeline {
       }
     }     */
     
-   stage ('SCA - Snyk ') {
-      steps {
+   stage ('SCA') {
+      parallel {
+        stage ('Snyk'){
+          steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
      snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
       }
- }
+    }
+     stage ('Trvy - Git repo scan'){
+       steps {
+         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
+       }
+     }
+  }    
+}
  
-   stage ('SAST - IBMApp Scan Source') {
-      steps {
+   stage ('SAST') {
+     parallel {
+       stage ('IBM App Scan Source') {
+         steps {
        appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1475', scanner: static_analyzer(hasOptions: false, target: '/var/jenkins_home/workspace/webgoat_pipeline'), type: 'Static Analyzer'
       }
-     } 
+    }
+      stage ('Trivy - Image Scan') {
+            steps {
+              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
+    }
+   }
+  }  
+} 
      
    stage ('Build') {
       steps {
@@ -40,13 +57,16 @@ pipeline {
      }
     }
    
-    stage ('Artifact Analysis - Trivy') {
-      steps {
-      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
-   // sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
-    }
-   }
-   
+    stage ('Artifact Analysis') {
+        parallel {
+          stage ('Trivy - Container Scan') {
+            steps {
+              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+          //  sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
+          }
+        }     
+  }
+ }
     stage ('Deploy') {
      steps {
      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp f545e59a5a7536da1fa8a6c3b9c3e2154485ac6adf6855e0379dd6217778e7c3:/usr/local/tomcat/webapps" '
@@ -83,18 +103,17 @@ pipeline {
      }
    }
    
-       stage ('Health CheckUp') {
+       stage ('Health') {
        parallel {
-        stage ('Jenkins') {
+        stage ('Jenkins|Monitor') {
           steps {
             sh 'echo http://10.109.137.30:8080/monitoring'
            }
          }
-       stage ('Notification - Hangouts') {
+       stage ('Notification') {
            steps {
-            hangoutsNotify message: "The Build was Success!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
+            hangoutsNotify message: "This message is from a pipeline!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
             }
-          
         } 
      }
    }
