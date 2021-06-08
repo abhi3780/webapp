@@ -80,6 +80,26 @@ pipeline {
          }
         } 
      }
-   } 
+   }
+   
+       stage ('Health') {
+       parallel {
+        stage ('Jenkins|Monitor') {
+          steps {
+            sh 'echo http://10.109.137.30:8080/monitoring'
+           }
+         }
+       stage ('Notification') {
+           success {
+            mail to:"elluruvenkata.abhilash@external.stellantis.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
+            }
+          failure {
+            mail to:"elluruvenkata.abhilash@external.stellantis.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
+            }
+        } 
+     }
+   }
+   
+    
   }
 }
