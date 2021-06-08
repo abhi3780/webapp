@@ -90,12 +90,10 @@ pipeline {
            }
          }
        stage ('Notification') {
-           success {
-            mail to:"elluruvenkata.abhilash@external.stellantis.com", subject:"SUCCESS: ${currentBuild.fullDisplayName}", body: "Yay, we passed."
+           steps {
+            hangoutsNotify message: "This message is from a pipeline!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
             }
-          failure {
-            mail to:"elluruvenkata.abhilash@external.stellantis.com", subject:"FAILURE: ${currentBuild.fullDisplayName}", body: "Boo, we failed."
-            }
+          
         } 
      }
    }
