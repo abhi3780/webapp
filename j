@@ -95,7 +95,7 @@ pipeline {
             sh 'echo https://10.109.137.30/omp?cmd=get_tasks&token=a96dba21-5731-4e03-a0c1-f2f6320187d3'
            }
          }
-       stage ('Qualysguard') {
+       stage ('QualysGuard') {
            steps {
            sh 'echo Command Script'
          }
@@ -112,7 +112,7 @@ pipeline {
          }
        stage ('Notification') {
            steps {
-            hangoutsNotify message: "This message is from a pipeline!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
+            hangoutsNotify message: "The Build was Success !!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
             }
         } 
      }
