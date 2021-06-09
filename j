@@ -75,7 +75,7 @@ pipeline {
           stage ('Audit - Docker Bench') {
            steps {
              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "cd ~/docker-bench-security/; ./docker-bench-security.sh" '
-             sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
+            // sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
         } 
        } 
   }
