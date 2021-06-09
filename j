@@ -15,7 +15,7 @@ pipeline {
     
    stage ('Check-Git-Secrets') {
       steps {
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git -v && exit " '
+        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run zricethezav/gitleaks --repo-url=https://github.com/abhi3780/webapp.git -v; exit " '
         // sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
       }
     }     
