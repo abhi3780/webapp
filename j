@@ -47,13 +47,11 @@ pipeline {
               sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
     }
    }
-    parallel {
       stage ('Audit - Docker Bench') {
         steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo cd /home/devuser/docker-bench-security/ && sh docker-bench-security.sh" '
         }
        }
-      } 
   }  
 } 
      
