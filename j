@@ -110,7 +110,7 @@ pipeline {
             sh 'echo http://10.109.137.30:8080/monitoring'
            }
          }
-       stage ('Notification') {
+       stage ('Notification-Hangouts') {
            steps {
             hangoutsNotify message: "The Build was Success !!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
             }
