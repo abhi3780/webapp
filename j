@@ -35,7 +35,7 @@ pipeline {
   }    
 }
  
-   stage ('SAST') {
+   stage ('SAST Scan') {
      parallel {
        stage ('IBM App Scan Source') {
          steps {
@@ -47,6 +47,13 @@ pipeline {
               sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
     }
    }
+    parallel {
+      stage ('Audit - Docker Bench') {
+        steps {
+         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo cd /home/devuser/docker-bench-security/ && sh docker-bench-security.sh" '
+        }
+       }
+      } 
   }  
 } 
      
@@ -57,22 +64,29 @@ pipeline {
      }
     }
    
-    stage ('Artifact Analysis') {
+    stage ('Artifact Analysis - Trivy') {
         parallel {
-          stage ('Trivy - Container Scan') {
+          stage ('Jenkins Container Scan') {
             steps {
               sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
           //  sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
           }
-        }     
+        }  
+          stage ('Tomcat Container Scan') {
+            steps {
+              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 tomcat:latest" '
+              }
+             }
   }
  }
+
     stage ('Deploy') {
      steps {
      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp f545e59a5a7536da1fa8a6c3b9c3e2154485ac6adf6855e0379dd6217778e7c3:/usr/local/tomcat/webapps" '
      sh 'echo -- BROWSE -- http://10.109.137.30:8000/WebApp/'
        }
     }
+
     stage ('DAST Scan') {
       parallel {
         stage ('Arachni') {
