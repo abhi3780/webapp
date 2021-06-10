@@ -20,7 +20,7 @@ pipeline {
       }
     }     
     
-   stage ('Test') {
+   stage ('SCA') {
       parallel {
         stage ('Snyk'){
           steps {
