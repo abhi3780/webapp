@@ -135,7 +135,8 @@ pipeline {
    
     
   }
-}
+// } 
+
 pipeline { 
   stages {
     stage ('Test') {
@@ -146,5 +147,6 @@ pipeline {
   }
 }
 
+}
 
 
