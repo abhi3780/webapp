@@ -8,7 +8,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
+<<<<<<< Updated upstream
     <title>Devsecops Course</title>
+=======
+    <title>Khalil --- Course --- 123</title>
+>>>>>>> Stashed changes
 
 
     <!-- Custom styles for this template -->
