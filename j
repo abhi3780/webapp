@@ -11,7 +11,8 @@ pipeline {
   
   environment {
     Snyk = 'Snyk'
- // Trivy = 'Trivy'
+    Trivy = 'Trivy'
+    Audit = 'Audit'
   }
   
   stages {
@@ -94,6 +95,9 @@ pipeline {
               }
              }
           stage ('Audit - Docker Bench') {
+            when {
+          environment ignoreCase: true, name: 'Audit', value: 'no'   
+          }
            steps {
              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "cd ~/docker-bench-security/; ./docker-bench-security.sh" '
              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
