@@ -11,6 +11,7 @@ pipeline {
   
   environment {
     Snyk = 'Snyk'
+  //  Trivy - Git repo scan = 'Trivy - Git repo scan'
   }
   
   stages {
@@ -33,15 +34,22 @@ pipeline {
    stage ('SCA') {      
     parallel {
         stage ('Snyk'){
-           when {
-          environment ignoreCase: true, name: 'Snyk', value: 'no'   
+          
+          when {
+          environment ignoreCase: true, name: 'Snyk', value: 'yes'   
           }
+          
           steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
        snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
       }
     }
      stage ('Trivy - Git repo scan'){
+       
+                 when {
+          environment ignoreCase: true, name: 'Trivy - Git repo scan', value: 'no'   
+          }
+       
        steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
        }
