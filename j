@@ -11,7 +11,7 @@ pipeline {
   
   environment {
     Snyk = 'Snyk'
-  //  Trivy - Git repo scan = 'Trivy - Git repo scan'
+ // Trivy = 'Trivy'
   }
   
   stages {
@@ -36,7 +36,7 @@ pipeline {
         stage ('Snyk'){
           
           when {
-          environment ignoreCase: false, name: 'Snyk', value: 'no'   
+          environment ignoreCase: true, name: 'Snyk', value: 'Snyk'   
           }
           
           steps {
@@ -47,7 +47,7 @@ pipeline {
      stage ('Trivy - Git repo scan'){
        
                  when {
-          environment ignoreCase: true, name: 'Trivy - Git repo scan', value: 'no'   
+          environment ignoreCase: true, name: 'Trivy', value: 'no'   
           }
        
        steps {
