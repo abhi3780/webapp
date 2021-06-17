@@ -37,7 +37,7 @@ pipeline {
         stage ('Snyk'){
           
           when {
-          environment ignoreCase: true, name: 'Snyk', value: 'Snyk'   
+          environment ignoreCase: true, name: 'Snyk', value: 'Snyk'  
           }
           
           steps {
