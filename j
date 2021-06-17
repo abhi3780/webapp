@@ -25,13 +25,11 @@ pipeline {
       }
     }     
     
-   stage ('SCA') {
-    
-    when {
+   stage ('SCA') {      
+     parallel {
+      when {
           environment ignoreCase: true, name: 'Snyk', value: 'no'   
           }
-             
-     parallel {
         stage ('Snyk'){
           steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
