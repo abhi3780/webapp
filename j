@@ -1,5 +1,10 @@
 pipeline {
   agent any 
+  
+  options {
+        ansiColor('xterm')
+    }
+  
   tools {
     maven 'm3-2-5'
   }
@@ -26,13 +31,11 @@ pipeline {
     }     
     
    stage ('SCA') {      
-    
-          when {
-          environment ignoreCase: true, name: 'Snyk', value: 'no'   
-          }
-    
     parallel {
         stage ('Snyk'){
+           when {
+          environment ignoreCase: true, name: 'Snyk', value: 'no'   
+          }
           steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
        snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
