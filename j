@@ -3,6 +3,11 @@ pipeline {
   tools {
     maven 'm3-2-5'
   }
+  
+  environment {
+    Snyk = 'Snyk'
+  }
+  
   stages {
     stage ('Initialize') {
       steps {
@@ -21,14 +26,19 @@ pipeline {
     }     
     
    stage ('SCA') {
-      parallel {
+    
+    when {
+          environment ignoreCase: true, name: 'Snyk', value: 'no'   
+          }
+             
+     parallel {
         stage ('Snyk'){
           steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
        snykSecurity organisation: 'e.vabhilash', projectName: 'abhi3780/webapp', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM'
       }
     }
-     stage ('Trvy - Git repo scan'){
+     stage ('Trivy - Git repo scan'){
        steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
        }
