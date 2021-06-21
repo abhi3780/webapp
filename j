@@ -156,7 +156,7 @@ pipeline {
          
          stage ('Splunk') {
            steps {
-           sh 'echo https://shcspsp02.shdc.chrysler.com:8443/'
+           sh 'echo https://shcspsp02.shdc.chrysler.com:8443/en-US/app/splunk_app_jenkins/build'
          }
         } 
         
