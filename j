@@ -36,9 +36,9 @@ pipeline {
     parallel {
         stage ('Snyk'){
           
-          when {
+      /*    when {
           environment ignoreCase: true, name: 'Snyk', value: 'Snyk'  
-          }
+          }   */
           
           steps {
     // snykSecurity failOnIssues: false, monitorProjectOnBuild: false, organisation: 'Demo', snykInstallation: 'snyk', snykTokenId: 'Snyk_27May_1015PM', targetFile: 'package'
@@ -47,9 +47,9 @@ pipeline {
     }
      stage ('Trivy - Git repo scan'){
        
-                 when {
+             /*    when {
           environment ignoreCase: true, name: 'Trivy', value: 'no'   
-          }
+          }   */
        
        steps {
          sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
@@ -95,9 +95,11 @@ pipeline {
               }
              }
           stage ('Audit - Docker Bench') {
-            when {
+          
+         /*   when {
           environment ignoreCase: true, name: 'Audit', value: 'no'   
-          }
+          }    */
+          
            steps {
              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "cd ~/docker-bench-security/; ./docker-bench-security.sh" '
              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
@@ -145,11 +147,19 @@ pipeline {
    
        stage ('Health') {
        parallel {
+       
         stage ('Jenkins|Monitor') {
           steps {
             sh 'echo http://10.109.137.30:8080/monitoring'
            }
          }
+         
+         stage ('Splunk') {
+           steps {
+           sh 'echo https://shcspsp02.shdc.chrysler.com:8443/'
+         }
+        } 
+        
        stage ('Notification-Hangouts') {
            steps {
             hangoutsNotify message: "The Build was Success !!!",token: "5Q0YJlSzAaRfDC9cbzHvYTZNp",threadByJob: false
