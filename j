@@ -139,8 +139,8 @@ pipeline {
          }
        stage ('QualysGuard') {
            steps {
-           sh 'qualysVulnerabilityAnalyzer apiServer: 'https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', optionProfile: 'Discovery', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: '', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'webapp_pipeline', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*2''
-         }
+           qualysVulnerabilityAnalyzer apiServer: 'https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', optionProfile: 'Discovery', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: '', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'webapp_pipeline', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*2'
+            }
         } 
      }
    }
