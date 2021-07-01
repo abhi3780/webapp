@@ -73,7 +73,7 @@ pipeline {
    
      stage ('Qualys - Image Scan') {
           steps {
-   sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "getImageVulnsFromQualys apiServer: 'https://qualysapi.qualys.com', credentialsId: 'Qualys', imageIds: 'vulnerables/web-dvwa:latest,', pollingInterval: '30', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', useLocalConfig: true, useProxy: true, vulnsTimeout: '600' "
+   getImageVulnsFromQualys apiServer: 'https://qualysapi.qualys.com', credentialsId: 'Qualys', imageIds: 'vulnerables/web-dvwa:latest,', pollingInterval: '30', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', useLocalConfig: true, useProxy: true, vulnsTimeout: '600'
      }
     }  
   
