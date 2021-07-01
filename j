@@ -70,11 +70,13 @@ pipeline {
               sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
     }
    }
-     stage ('Qualys - Image Scan') {
+   
+   /*  stage ('Qualys - Image Scan') {
           steps {
      getImageVulnsFromQualys apiServer: 'https://qualysapi.qualys.com', credentialsId: 'Qualys', imageIds: 'vulnerables/web-dvwa:latest,', pollingInterval: '30', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', useLocalConfig: true, useProxy: true, vulnsTimeout: '600'
      }
-    }
+    }  */
+  
   }  
 } 
      
