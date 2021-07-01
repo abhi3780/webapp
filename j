@@ -145,8 +145,11 @@ pipeline {
          }
        stage ('QualysGuard') {
            steps {
-    qualysVulnerabilityAnalyzer apiServer: 'https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'FCA Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000'
-      // getImageVulnsFromQualys apiServer: 'https://qualysapi.qualys.com', credentialsId: 'Qualys', imageIds: 'vulnerables/web-dvwa:latest', pollingInterval: '30', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', useLocalConfig: true, useProxy: true, vulnsTimeout: '600'
+ // qualysVulnerabilityAnalyzer apiServer: 'https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'FCA Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000'
+    
+    qualysVulnerabilityAnalyzer apiServer: ' https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'Stellantis Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'Test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000' 
+    
+    // getImageVulnsFromQualys apiServer: 'https://qualysapi.qualys.com', credentialsId: 'Qualys', imageIds: 'vulnerables/web-dvwa:latest', pollingInterval: '30', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', useLocalConfig: true, useProxy: true, vulnsTimeout: '600'
         }
         } 
      }
