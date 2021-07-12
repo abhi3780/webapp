@@ -116,7 +116,7 @@ pipeline {
 
     stage ('Deploy') {
      steps {
-     sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/7b91c4e9569c020c5f6ab0fb2fb235346ed75beb5483957e82eef4f0f9417f63/_data/workspace/webapp_pipeline/target/WebApp f545e59a5a7536da1fa8a6c3b9c3e2154485ac6adf6855e0379dd6217778e7c3:/usr/local/tomcat/webapps" '
+     sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/6fef07f82b8b82667e6ce620415bc3021da2333772795f4aab316b1e37bd5019 /_data/workspace/webapp_pipeline/target/WebApp 3f5dd031c6ead05bc216d17e63762769167b863f9dcc0fd98bfe6deb308d432b:/usr/local/tomcat/webapps" '
      sh 'echo -- BROWSE -- http://10.109.137.30:8000/WebApp/'
        }
     }
@@ -145,11 +145,9 @@ pipeline {
          }
        stage ('QualysGuard') {
            steps {
- // qualysVulnerabilityAnalyzer apiServer: 'https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'FCA Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000'
     
- //   qualysVulnerabilityAnalyzer apiServer: ' https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'Stellantis Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'Test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000' 
+      qualysVulnerabilityAnalyzer apiServer: ' https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'Stellantis Full Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'Test123', scannerName: 'N_AZURE_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000' 
     
-    qualysVulnerabilityAnalyzer apiServer: ' https://qualysapi.qualys.com', credsId: 'Qualys', hostIp: '10.109.137.30', network: 'ACCESS_FORBIDDEN', optionProfile: 'FCA Light Inventory Scan', platform: 'US_PLATFORM_1', pollingInterval: '2', proxyCredentialsId: 'Qualys', proxyPort: 9080, proxyServer: 'aiproxy.appl.chrysler.com', scanName: 'Test123', scannerName: 'N_MAZ_1', useHost: true, useProxy: true, vulnsTimeout: '60*100000'
     }
         } 
      }
