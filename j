@@ -62,7 +62,7 @@ pipeline {
      parallel {
        stage ('IBM App Scan Source') {
          steps {
-       appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1475', scanner: static_analyzer(hasOptions: false, target: '/var/jenkins_home/workspace/webgoat_pipeline'), type: 'Static Analyzer'
+      // appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1475', scanner: static_analyzer(hasOptions: false, target: '/var/jenkins_home/workspace/webgoat_pipeline'), type: 'Static Analyzer'
       }
     }
       stage ('Trivy - Image Scan') {
@@ -131,7 +131,7 @@ pipeline {
     }
       stage ('IBMApp Scan Dynamic') {
       steps {
-        appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1864', scanner: dynamic_analyzer(hasOptions: false, optimization: 'Fast', scanType: 'Staging', target: 'http://altoromutual.com:8080/login.jsp'), type: 'Dynamic Analyzer'
+    //    appscan application: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e', credentials: 'd4749e0b-a502-42a6-abe6-c9bab6b925ca', name: 'cb595860-1142-4fb9-95cb-eee3d7a0f33e1864', scanner: dynamic_analyzer(hasOptions: false, optimization: 'Fast', scanType: 'Staging', target: 'http://altoromutual.com:8080/login.jsp'), type: 'Dynamic Analyzer'
      }
     }  
    }
