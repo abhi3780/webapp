@@ -117,6 +117,9 @@ pipeline {
     stage ('Deploy') {
      steps {
      sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp 990e2927aada4fcfb171d827744e87fec4ee7e7a3827744342e01f5c7678a3d5:/usr/local/tomcat/webapps" '
+     
+  // Volume is  the Jenkins Volume ID and Tomacat's Container ID
+  
      sh 'echo -- BROWSE -- http://10.109.137.30:80/WebApp/'
        }
     }
