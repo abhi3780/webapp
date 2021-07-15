@@ -27,8 +27,8 @@ pipeline {
     
    stage ('Check-Git-Secrets') {
       steps {
-        sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker run raphaelareya/gitleaks:latest -r https://github.com/abhi3780/webapp.git " '
-        // sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
+        sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "sudo docker run raphaelareya/gitleaks:latest -r https://github.com/abhi3780/webapp.git " '
+        // sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "exit 0" '
       }
     }     
     
@@ -52,7 +52,7 @@ pipeline {
           }   */
        
        steps {
-         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
+         sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 repo https://github.com/abhi3780/trivy-ci-test" '
        }
      }
   }    
@@ -67,7 +67,7 @@ pipeline {
     }
       stage ('Trivy - Image Scan') {
             steps {
-              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
+              sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 image vulnerables/web-dvwa:latest" '
     }
    }
    
@@ -91,13 +91,13 @@ pipeline {
         parallel {
           stage ('Jenkins Container Scan') {
             steps {
-              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
-          //  sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
+              sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 jenkins/jenkins:lts" '
+          //  sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 -o report.html jenkins/jenkins:lts" '
           }
         }  
           stage ('Tomcat Container Scan') {
             steps {
-              sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 tomcat:latest" '
+              sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "docker run aquasec/trivy:0.18.3 tomcat:latest" '
               }
              }
           stage ('Audit - Docker Bench') {
@@ -107,8 +107,8 @@ pipeline {
           }    */
           
            steps {
-             sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "cd ~/docker-bench-security/; ./docker-bench-security.sh" '
-             sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "exit 0" '
+             sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "cd ~/docker-bench-security/; ./docker-bench-security.sh" '
+             sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "exit 0" '
         } 
        } 
   }
@@ -116,7 +116,7 @@ pipeline {
 
     stage ('Deploy') {
      steps {
-     sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp 990e2927aada4fcfb171d827744e87fec4ee7e7a3827744342e01f5c7678a3d5:/usr/local/tomcat/webapps" '
+     sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "sudo docker cp /var/lib/docker/volumes/d39ec24666c4194ae2555d6b5e7f277a4886cc0876baa53ed51e6bc31cf42fdd/_data/workspace/webapp_pipeline/target/WebApp 990e2927aada4fcfb171d827744e87fec4ee7e7a3827744342e01f5c7678a3d5:/usr/local/tomcat/webapps" '
      
   // Volume is  the Jenkins Volume ID and Tomacat's Container ID
   
@@ -128,7 +128,7 @@ pipeline {
       parallel {
         stage ('Arachni') {
       steps {
-         sh 'sshpass -p Stellantis01 ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/" '
+         sh 'sshpass -p $$$ ssh devuser@10.109.137.30 "sudo docker exec c2406913789c52e3dc69b680b93f60dc97d64b825f0948f2afbe2a9c95a61678 bash /arachni/bin/./arachni http://10.109.137.30:8000/WebApp/" '
          sh 'echo REPORTS SAVED in /arachni Folder'
         }
     }
